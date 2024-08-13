@@ -56,7 +56,7 @@ public class TeduEcommerceAuthServerModule : AbpModule
         {
             builder.AddValidation(options =>
             {
-                options.AddAudiences("TeduEcommerce");
+                options.AddAudiences("TeduEcommerce", "TeduEcommerce.Admin");
                 options.UseLocalServer();
                 options.UseAspNetCore();
             });
@@ -111,8 +111,8 @@ public class TeduEcommerceAuthServerModule : AbpModule
 
         Configure<AbpAuditingOptions>(options =>
         {
-                //options.IsEnabledForGetRequests = true;
-                options.ApplicationName = "AuthServer";
+            //options.IsEnabledForGetRequests = true;
+            options.ApplicationName = "AuthServer";
         });
 
         if (hostingEnvironment.IsDevelopment())
@@ -149,7 +149,7 @@ public class TeduEcommerceAuthServerModule : AbpModule
             var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]);
             dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "TeduEcommerce-Protection-Keys");
         }
-        
+
         context.Services.AddSingleton<IDistributedLockProvider>(sp =>
         {
             var connection = ConnectionMultiplexer
@@ -200,7 +200,7 @@ public class TeduEcommerceAuthServerModule : AbpModule
         app.UseCors();
         app.UseAuthentication();
         app.UseAbpOpenIddictValidation();
-       
+
         if (MultiTenancyConsts.IsEnabled)
         {
             app.UseMultiTenancy();
