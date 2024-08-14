@@ -16,6 +16,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { EditorModule } from 'primeng/editor';
+import { TeduSharedModule } from '../shared/modules/tedu-shared.module';
 @NgModule({
   declarations: [ProductComponent, ProductDetailComponent],
   imports: [
@@ -34,6 +35,7 @@ import { EditorModule } from 'primeng/editor';
     CheckboxModule,
     InputTextareaModule,
     EditorModule,
+    TeduSharedModule,
   ],
 })
 export class ProductModule {}

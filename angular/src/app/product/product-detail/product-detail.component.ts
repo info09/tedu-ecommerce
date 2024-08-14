@@ -20,11 +20,28 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   manufacturers: any[] = [];
   productTypes: any[] = [];
   selectedEntity = {} as ProductDto;
+  btnDisabled = false;
   constructor(
     private productsService: ProductsService,
     private productCategoriesService: ProductCategoriesService,
     private fb: FormBuilder
   ) {}
+
+  validationMessages = {
+    code: [{ type: 'required', message: 'Bạn phải nhập mã duy nhất' }],
+    name: [
+      { type: 'required', message: 'Bạn phải nhập tên' },
+      { type: 'maxlength', message: 'Bạn không được nhập quá 255 kí tự' },
+    ],
+    slug: [{ type: 'required', message: 'Bạn phải URL duy nhất' }],
+    sku: [{ type: 'required', message: 'Bạn phải mã SKU sản phẩm' }],
+    manufacturerId: [{ type: 'required', message: 'Bạn phải chọn nhà cung cấp' }],
+    categoryId: [{ type: 'required', message: 'Bạn phải chọn danh mục' }],
+    productType: [{ type: 'required', message: 'Bạn phải chọn loại sản phẩm' }],
+    sortOrder: [{ type: 'required', message: 'Bạn phải nhập thứ tự' }],
+    sellPrice: [{ type: 'required', message: 'Bạn phải nhập giá bán' }],
+  };
+
   ngOnDestroy(): void {
     throw new Error('Method not implemented.');
   }
@@ -89,9 +106,11 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   private toggleBlockUI(enabled: boolean) {
     if (enabled == true) {
       this.blockedPanel = true;
+      this.btnDisabled = true;
     } else {
       setTimeout(() => {
         this.blockedPanel = false;
+        this.btnDisabled = true;
       }, 1000);
     }
   }
