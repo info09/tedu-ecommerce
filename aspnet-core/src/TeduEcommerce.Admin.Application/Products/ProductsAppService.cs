@@ -8,9 +8,9 @@ using Volo.Abp.Domain.Repositories;
 
 namespace TeduEcommerce.Products
 {
-    public class ProductAppService : CrudAppService<Product, ProductDto, Guid, PagedResultRequestDto, CreateUpdateProductDto, CreateUpdateProductDto>, IProductAppService
+    public class ProductsAppService : CrudAppService<Product, ProductDto, Guid, PagedResultRequestDto, CreateUpdateProductDto, CreateUpdateProductDto>, IProductsAppService
     {
-        public ProductAppService(IRepository<Product, Guid> repository) : base(repository)
+        public ProductsAppService(IRepository<Product, Guid> repository) : base(repository)
         {
         }
 
@@ -29,10 +29,11 @@ namespace TeduEcommerce.Products
             return ObjectMapper.Map<List<Product>, List<ProductInListDto>>(data);
         }
 
-        public async Task<PagedResultDto<ProductInListDto>> GetListFilterAsync(BaseListFilterDto input)
+        public async Task<PagedResultDto<ProductInListDto>> GetListFilterAsync(ProductListFilterDto input)
         {
             var query = await Repository.GetQueryableAsync();
             query = query.WhereIf(!string.IsNullOrEmpty(input.Keyword), i => i.Name.ToLower().Contains(input.Keyword.ToLower()));
+            query = query.WhereIf(input.CategoryId.HasValue, i => i.CategoryId ==  input.CategoryId.Value);
 
             var totalCount = await AsyncExecuter.LongCountAsync(query);
             var data = await AsyncExecuter.ToListAsync(query.Skip(input.SkipCount).Take(input.MaxResultCount));

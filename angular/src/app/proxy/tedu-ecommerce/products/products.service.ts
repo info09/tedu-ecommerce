@@ -1,20 +1,19 @@
-import type { CreateUpdateProductDto, ProductDto, ProductInListDto } from './models';
+import type { CreateUpdateProductDto, ProductDto, ProductInListDto, ProductListFilterDto } from './models';
 import { RestService } from '@abp/ng.core';
 import type { PagedResultDto, PagedResultRequestDto } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
-import type { BaseListFilterDto } from '../models';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProductService {
+export class ProductsService {
   apiName = 'Default';
   
 
   create = (input: CreateUpdateProductDto) =>
     this.restService.request<any, ProductDto>({
       method: 'POST',
-      url: '/api/app/product',
+      url: '/api/app/products',
       body: input,
     },
     { apiName: this.apiName });
@@ -23,7 +22,7 @@ export class ProductService {
   delete = (id: string) =>
     this.restService.request<any, void>({
       method: 'DELETE',
-      url: `/api/app/product/${id}`,
+      url: `/api/app/products/${id}`,
     },
     { apiName: this.apiName });
   
@@ -31,7 +30,7 @@ export class ProductService {
   deleteMultiple = (ids: string[]) =>
     this.restService.request<any, void>({
       method: 'DELETE',
-      url: '/api/app/product/multiple',
+      url: '/api/app/products/multiple',
       params: { ids },
     },
     { apiName: this.apiName });
@@ -40,7 +39,7 @@ export class ProductService {
   get = (id: string) =>
     this.restService.request<any, ProductDto>({
       method: 'GET',
-      url: `/api/app/product/${id}`,
+      url: `/api/app/products/${id}`,
     },
     { apiName: this.apiName });
   
@@ -48,7 +47,7 @@ export class ProductService {
   getList = (input: PagedResultRequestDto) =>
     this.restService.request<any, PagedResultDto<ProductDto>>({
       method: 'GET',
-      url: '/api/app/product',
+      url: '/api/app/products',
       params: { maxResultCount: input.maxResultCount, skipCount: input.skipCount },
     },
     { apiName: this.apiName });
@@ -57,16 +56,16 @@ export class ProductService {
   getListAll = () =>
     this.restService.request<any, ProductInListDto[]>({
       method: 'GET',
-      url: '/api/app/product/all',
+      url: '/api/app/products/all',
     },
     { apiName: this.apiName });
   
 
-  getListFilter = (input: BaseListFilterDto) =>
+  getListFilter = (input: ProductListFilterDto) =>
     this.restService.request<any, PagedResultDto<ProductInListDto>>({
       method: 'GET',
-      url: '/api/app/product/filter',
-      params: { keyword: input.keyword, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      url: '/api/app/products/filter',
+      params: { categoryId: input.categoryId, keyword: input.keyword, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName });
   
@@ -74,7 +73,7 @@ export class ProductService {
   update = (id: string, input: CreateUpdateProductDto) =>
     this.restService.request<any, ProductDto>({
       method: 'PUT',
-      url: `/api/app/product/${id}`,
+      url: `/api/app/products/${id}`,
       body: input,
     },
     { apiName: this.apiName });

@@ -1,3 +1,3 @@
 export * from './models';
 export * from './product-type.enum';
-export * from './product.service';
+export * from './products.service';

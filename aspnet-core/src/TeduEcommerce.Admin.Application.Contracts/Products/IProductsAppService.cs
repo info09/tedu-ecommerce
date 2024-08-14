@@ -6,9 +6,9 @@ using Volo.Abp.Application.Services;
 
 namespace TeduEcommerce.Products
 {
-    public interface IProductAppService : ICrudAppService<ProductDto, Guid, PagedResultRequestDto, CreateUpdateProductDto, CreateUpdateProductDto>
+    public interface IProductsAppService : ICrudAppService<ProductDto, Guid, PagedResultRequestDto, CreateUpdateProductDto, CreateUpdateProductDto>
     {
-        Task<PagedResultDto<ProductInListDto>> GetListFilterAsync(BaseListFilterDto input);
+        Task<PagedResultDto<ProductInListDto>> GetListFilterAsync(ProductListFilterDto input);
         Task<List<ProductInListDto>> GetListAllAsync();
         Task DeleteMultipleAsync(IEnumerable<Guid> ids);
     }
