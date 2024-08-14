@@ -1,10 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
-  template: `
-    <abp-loader-bar></abp-loader-bar>
-    <router-outlet></router-outlet>
-  `,
+  template: ` <router-outlet></router-outlet> `,
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+  menuMode = 'static';
+
+  constructor(private primeNGConfig: PrimeNGConfig) {}
+
+  ngOnInit() {
+    this.primeNGConfig.ripple = true;
+    document.documentElement.style.fontSize = '14px';
+  }
+}
