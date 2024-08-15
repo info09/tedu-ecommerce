@@ -18,6 +18,7 @@ import { AppLayoutModule } from './layout/app.layout.module';
 import { MessageService } from 'primeng/api';
 import { NotificationService } from './shared/services/notificationService.service';
 import { DialogService } from 'primeng/dynamicdialog';
+import { UtilityService } from './shared/services/utility.service';
 
 @NgModule({
   imports: [
@@ -38,7 +39,13 @@ import { DialogService } from 'primeng/dynamicdialog';
     SideMenuLayoutModule.forRoot(),
   ],
   declarations: [AppComponent],
-  providers: [APP_ROUTE_PROVIDER, DialogService, MessageService, NotificationService],
+  providers: [
+    APP_ROUTE_PROVIDER,
+    DialogService,
+    MessageService,
+    NotificationService,
+    UtilityService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
