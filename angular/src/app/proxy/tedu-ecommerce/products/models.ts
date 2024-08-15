@@ -35,8 +35,8 @@ export interface ProductDto {
   thumbnailPicture?: string;
   sellPrice: number;
   id?: string;
-  creategoryName?: string;
-  creategorySlug?: string;
+  categoryName?: string;
+  categorySlug?: string;
 }
 
 export interface ProductInListDto extends EntityDto<string> {

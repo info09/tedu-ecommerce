@@ -18,8 +18,37 @@ namespace TeduEcommerce.Products
         public string SeoMetaDescription { get; set; }
         public string Description { get; set; }
         public string ThumbnailPicture { get; set; }
-        public decimal SellPrice { get; set; }
-        public string CreategoryName { get; set; }
-        public string CreategorySlug { get; set; }
+        public double SellPrice { get; set; }
+        public string CategoryName { get; set; }
+        public string CategorySlug { get; set; }
+
+        public Product() { }
+        public Product(Guid id, Guid manufacturerId,
+            string name, string code, string slug,
+            ProductType productType, string sKU,
+            int sortOrder, bool visibility,
+            bool isActive, Guid categoryId,
+            string seoMetaDescription, string description,
+            string thumbnailPicture, double sellPrice,
+            string categoryName, string categorySlug)
+        {
+            Id = id;
+            ManufacturerId = manufacturerId;
+            Name = name;
+            Code = code;
+            Slug = slug;
+            ProductType = productType;
+            SKU = sKU;
+            SortOrder = sortOrder;
+            Visibility = visibility;
+            IsActive = isActive;
+            CategoryId = categoryId;
+            SeoMetaDescription = seoMetaDescription;
+            Description = description;
+            ThumbnailPicture = thumbnailPicture;
+            SellPrice = sellPrice;
+            CategoryName = categoryName;
+            CategorySlug = categorySlug;
+        }
     }
 }
