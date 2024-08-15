@@ -14,6 +14,7 @@ import {
 import { NotificationService } from '../shared/services/notificationService.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-product',
@@ -38,7 +39,8 @@ export class ProductComponent implements OnInit, OnDestroy {
     private productsService: ProductsService,
     private productCategoriesService: ProductCategoriesService,
     private dialogService: DialogService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private confirmationService: ConfirmationService
   ) {}
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
@@ -142,5 +144,39 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.blockedPanel = false;
       }, 1000);
     }
+  }
+
+  deleteItems() {
+    if (this.selectedItems.length === 0) {
+      this.notificationService.showError('Phải lựa chọn ít nhất 1 bản ghi');
+      return;
+    }
+
+    var ids = [];
+    this.selectedItems.forEach(element => {
+      ids.push(element.id);
+    });
+    this.confirmationService.confirm({
+      message: 'Bạn có chắc chắn muốn xóa?',
+      accept: () => this.deleteItemsConfirmed(ids),
+    });
+  }
+
+  deleteItemsConfirmed(ids: string[]) {
+    this.toggleBlockUI(true);
+    this.productsService
+      .deleteMultiple(ids)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: () => {
+          this.notificationService.showSuccess('Xóa thành công');
+          this.loadData();
+          this.selectedItems = [];
+          this.toggleBlockUI(false);
+        },
+        error: () => {
+          this.toggleBlockUI(false);
+        },
+      });
   }
 }

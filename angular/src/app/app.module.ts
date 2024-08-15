@@ -19,6 +19,9 @@ import { MessageService } from 'primeng/api';
 import { NotificationService } from './shared/services/notificationService.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { UtilityService } from './shared/services/utility.service';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   imports: [
@@ -37,6 +40,8 @@ import { UtilityService } from './shared/services/utility.service';
     SettingManagementConfigModule.forRoot(),
     ThemeLeptonXModule.forRoot(),
     SideMenuLayoutModule.forRoot(),
+    ToastModule,
+    ConfirmDialogModule,
   ],
   declarations: [AppComponent],
   providers: [
@@ -45,6 +50,7 @@ import { UtilityService } from './shared/services/utility.service';
     MessageService,
     NotificationService,
     UtilityService,
+    ConfirmationService,
   ],
   bootstrap: [AppComponent],
 })

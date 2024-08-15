@@ -19,6 +19,7 @@ import { TeduSharedModule } from '../shared/modules/tedu-shared.module';
 import { BadgeModule } from 'primeng/badge';
 import { ImageModule } from 'primeng/image';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [ProductComponent, ProductDetailComponent],
@@ -41,6 +42,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     TeduSharedModule,
     BadgeModule,
     ImageModule,
+    ConfirmDialogModule,
   ],
   entryComponents: [ProductDetailComponent],
 })
