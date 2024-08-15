@@ -1,6 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { ProductDto, ProductInListDto, ProductsService } from '@proxy/tedu-ecommerce/products';
+import {
+  ProductDto,
+  ProductInListDto,
+  ProductsService,
+  ProductType,
+} from '@proxy/tedu-ecommerce/products';
 import { PagedResultDto } from '@abp/ng.core';
 import {
   ProductCategoriesService,
@@ -123,6 +128,10 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.notificationService.showSuccess('Cập nhật sản phẩm thành công');
       }
     });
+  }
+
+  getProductTypeName(value: number) {
+    return ProductType[value];
   }
 
   private toggleBlockUI(enable: boolean) {
