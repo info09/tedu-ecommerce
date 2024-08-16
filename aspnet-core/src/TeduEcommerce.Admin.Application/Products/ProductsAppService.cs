@@ -17,13 +17,15 @@ namespace TeduEcommerce.Products
     public class ProductsAppService : CrudAppService<Product, ProductDto, Guid, PagedResultRequestDto, CreateUpdateProductDto, CreateUpdateProductDto>, IProductsAppService
     {
         private readonly ProductManager _productManager;
+        private readonly ProductCodeGenerator _productCodeGenerator;
         private readonly IRepository<ProductCategory, Guid> _productCategoryRepository;
         private readonly IBlobContainer<ProductThumbnailPictureContainer> _fileContainer;
-        public ProductsAppService(IRepository<Product, Guid> repository, ProductManager productManager, IRepository<ProductCategory, Guid> productCategoryRepository, IBlobContainer<ProductThumbnailPictureContainer> fileContainer) : base(repository)
+        public ProductsAppService(IRepository<Product, Guid> repository, ProductManager productManager, IRepository<ProductCategory, Guid> productCategoryRepository, IBlobContainer<ProductThumbnailPictureContainer> fileContainer, ProductCodeGenerator productCodeGenerator) : base(repository)
         {
             _productManager = productManager;
             _productCategoryRepository = productCategoryRepository;
             _fileContainer = fileContainer;
+            _productCodeGenerator = productCodeGenerator;
         }
 
         public async Task DeleteMultipleAsync(IEnumerable<Guid> ids)
@@ -124,6 +126,11 @@ namespace TeduEcommerce.Products
 
             var result = Convert.ToBase64String(thumnmailContent);
             return result;
+        }
+
+        public async Task<string> GetSuggestNewCodeAsync()
+        {
+            return await _productCodeGenerator.GenerateAsync();
         }
     }
 }

@@ -8,6 +8,7 @@ using TeduEcommerce.Configurations.ProductAttributes;
 using TeduEcommerce.Configurations.ProductCategories;
 using TeduEcommerce.Configurations.Products;
 using TeduEcommerce.Configurations.Promotions;
+using TeduEcommerce.IdentitySettings;
 using TeduEcommerce.Inventories;
 using TeduEcommerce.InventoryTickets;
 using TeduEcommerce.Manufacturers;
@@ -92,6 +93,7 @@ public class TeduEcommerceDbContext :
     public DbSet<PromotionManufacturer> PromotionManufacturers { get; set; }
     public DbSet<PromotionProduct> PromotionProducts { get; set; }
     public DbSet<PromotionUsageHistory> PromotionUsageHistories { get; set; }
+    public DbSet<IdentitySetting> IdentitySettings { get; set; }
 
     #endregion
 
