@@ -7,6 +7,7 @@ import { ConfirmationService } from 'primeng/api';
 import { PagedResultDto } from '@abp/ng.core';
 import { RoleDetailComponent } from './role-detail/role-detail.component';
 import { MessageConstants } from '../shared/constants/message.const';
+import { PermissionGrantComponent } from './permission-grant/permission-grant.component';
 
 @Component({
   selector: 'app-role',
@@ -101,17 +102,13 @@ export class RoleComponent implements OnInit, OnDestroy {
     });
   }
 
-  showPermissionModal() {
-    if (this.selectedItems.length == 0) {
-      this.notificationService.showError(MessageConstants.NOT_CHOOSE_ANY_RECORD);
-      return;
-    }
-    var id = this.selectedItems[0].id;
-    const ref = this.dialogService.open(RoleDetailComponent, {
+  showPermissionModal(id: string, name: string) {
+    const ref = this.dialogService.open(PermissionGrantComponent, {
       data: {
         id: id,
+        name: name,
       },
-      header: 'Cập nhật quyền',
+      header: name,
       width: '70%',
     });
 
