@@ -2,6 +2,10 @@
 {
     public enum AttributeType
     {
-        Date = 1, Varchar = 2, Text = 3, Int = 4
+        Int = 1,
+        Varchar = 2,
+        Text = 3,
+        Decimal = 4,
+        Date = 5,
     }
 }
