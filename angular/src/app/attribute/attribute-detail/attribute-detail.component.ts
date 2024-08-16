@@ -4,7 +4,7 @@ import { attributeTypeOptions } from '@proxy/tedu-ecommerce/attributes';
 import {
   ProductAttributeDto,
   ProductAttributesService,
-} from '@proxy/tedu-ecommerce/product-attributes';
+} from '@proxy/tedu-ecommerce/catalog/product-attributes';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { NotificationService } from 'src/app/shared/services/notificationService.service';

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { RolesService } from '@proxy/tedu-ecommerce/roles';
+import { RolesService } from '@proxy/tedu-ecommerce/system/roles';
 import {
   GetPermissionListResultDto,
   PermissionGrantInfoDto,

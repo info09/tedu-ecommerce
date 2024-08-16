@@ -3,14 +3,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { forkJoin, Subject, takeUntil } from 'rxjs';
+import { NotificationService } from 'src/app/shared/services/notificationService.service';
+import { AttributeType } from '@proxy/tedu-ecommerce/attributes';
 import {
   ProductAttributeInListDto,
   ProductAttributesService,
-} from '@proxy/tedu-ecommerce/product-attributes';
-import { ProductsService } from '@proxy/tedu-ecommerce/products';
-import { NotificationService } from 'src/app/shared/services/notificationService.service';
-import { ProductAttributeValueDto } from '@proxy/tedu-ecommerce/products/attributes';
-import { AttributeType } from '@proxy/tedu-ecommerce/attributes';
+} from '@proxy/tedu-ecommerce/catalog/product-attributes';
+import { ProductsService } from '@proxy/tedu-ecommerce/catalog/products';
+import { ProductAttributeValueDto } from '@proxy/tedu-ecommerce/catalog/products/attributes';
 
 @Component({
   selector: 'app-product-attribute',

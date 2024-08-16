@@ -1,9 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  ProductAttributeDto,
-  ProductAttributeInListDto,
-  ProductAttributesService,
-} from '@proxy/tedu-ecommerce/product-attributes';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { NotificationService } from '../shared/services/notificationService.service';
@@ -12,6 +7,11 @@ import { PagedResultDto } from '@abp/ng.core';
 import { AttributeDetailComponent } from './attribute-detail/attribute-detail.component';
 import { AttributeType } from '@proxy/tedu-ecommerce/attributes';
 import { MessageConstants } from '../shared/constants/message.const';
+import {
+  ProductAttributeDto,
+  ProductAttributeInListDto,
+  ProductAttributesService,
+} from '@proxy/tedu-ecommerce/catalog/product-attributes';
 
 @Component({
   selector: 'app-attribute',

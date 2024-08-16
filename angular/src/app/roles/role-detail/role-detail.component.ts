@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { RoleDto, RoleInListDto, RolesService } from '@proxy/tedu-ecommerce/roles';
+import { RoleDto, RolesService } from '@proxy/tedu-ecommerce/system/roles';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';

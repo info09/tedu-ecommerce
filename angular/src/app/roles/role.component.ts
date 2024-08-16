@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RoleDto, RoleInListDto, RolesService } from '@proxy/tedu-ecommerce/roles';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { NotificationService } from '../shared/services/notificationService.service';
@@ -8,6 +7,7 @@ import { PagedResultDto } from '@abp/ng.core';
 import { RoleDetailComponent } from './role-detail/role-detail.component';
 import { MessageConstants } from '../shared/constants/message.const';
 import { PermissionGrantComponent } from './permission-grant/permission-grant.component';
+import { RoleDto, RoleInListDto, RolesService } from '@proxy/tedu-ecommerce/system/roles';
 
 @Component({
   selector: 'app-role',

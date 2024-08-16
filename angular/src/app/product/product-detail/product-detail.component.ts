@@ -1,12 +1,16 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ManufacturerInListDto, ManufacturersService } from '@proxy/tedu-ecommerce/manufacturers';
+import {
+  ManufacturerInListDto,
+  ManufacturersService,
+} from '@proxy/tedu-ecommerce/catalog/manufacturers';
 import {
   ProductCategoriesService,
   ProductCategoryInListDto,
-} from '@proxy/tedu-ecommerce/product-categories';
-import { ProductDto, ProductsService, productTypeOptions } from '@proxy/tedu-ecommerce/products';
+} from '@proxy/tedu-ecommerce/catalog/product-categories';
+import { ProductDto, ProductsService } from '@proxy/tedu-ecommerce/catalog/products';
+import { productTypeOptions } from '@proxy/tedu-ecommerce/products';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { forkJoin, Subject, takeUntil } from 'rxjs';
 import { NotificationService } from 'src/app/shared/services/notificationService.service';

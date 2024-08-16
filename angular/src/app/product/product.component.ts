@@ -1,22 +1,22 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ProductDto,
-  ProductInListDto,
-  ProductsService,
-  ProductType,
-} from '@proxy/tedu-ecommerce/products';
 import { PagedResultDto } from '@abp/ng.core';
-import {
-  ProductCategoriesService,
-  ProductCategoryInListDto,
-} from '@proxy/tedu-ecommerce/product-categories';
 import { NotificationService } from '../shared/services/notificationService.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ConfirmationService } from 'primeng/api';
 import { ProductAttributeComponent } from './product-attribute/product-attribute.component';
 import { MessageConstants } from '../shared/constants/message.const';
+import {
+  ProductDto,
+  ProductInListDto,
+  ProductsService,
+} from '@proxy/tedu-ecommerce/catalog/products';
+import {
+  ProductCategoriesService,
+  ProductCategoryInListDto,
+} from '@proxy/tedu-ecommerce/catalog/product-categories';
+import { ProductType } from '@proxy/tedu-ecommerce/products';
 
 @Component({
   selector: 'app-product',

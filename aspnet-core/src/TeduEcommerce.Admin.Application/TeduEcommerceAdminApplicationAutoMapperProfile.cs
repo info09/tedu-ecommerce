@@ -1,10 +1,15 @@
 ﻿using AutoMapper;
 using TeduEcommerce.Attributes;
+using TeduEcommerce.Catalog.Manufacturers;
+using TeduEcommerce.Catalog.ProductAttributes;
+using TeduEcommerce.Catalog.ProductCategories;
+using TeduEcommerce.Catalog.Products;
 using TeduEcommerce.Manufacturers;
-using TeduEcommerce.ProductAttributes;
 using TeduEcommerce.ProductCategories;
 using TeduEcommerce.Products;
 using TeduEcommerce.Roles;
+using TeduEcommerce.System.Roles;
+using TeduEcommerce.System.Users;
 using Volo.Abp.Identity;
 
 namespace TeduEcommerce.Admin;
@@ -50,5 +55,9 @@ public class TeduEcommerceAdminApplicationAutoMapperProfile : Profile
             :
             null));
         CreateMap<CreateUpdateRoleDto, IdentityRole>();
+
+        //User
+        CreateMap<IdentityUser, UserDto>();
+        CreateMap<IdentityUser, UserInListDto>();
     }
 }
