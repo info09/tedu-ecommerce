@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { RoleDto, RoleInListDto, RoleService } from '@proxy/tedu-ecommerce/roles';
+import { RoleDto, RoleInListDto, RolesService } from '@proxy/tedu-ecommerce/roles';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -26,7 +26,7 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
   constructor(
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
-    private roleService: RoleService,
+    private roleService: RolesService,
     public authService: AuthService,
     private utilService: UtilityService,
     private fb: FormBuilder

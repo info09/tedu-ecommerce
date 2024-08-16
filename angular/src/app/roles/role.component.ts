@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RoleDto, RoleInListDto, RoleService } from '@proxy/tedu-ecommerce/roles';
+import { RoleDto, RoleInListDto, RolesService } from '@proxy/tedu-ecommerce/roles';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { NotificationService } from '../shared/services/notificationService.service';
@@ -29,7 +29,7 @@ export class RoleComponent implements OnInit, OnDestroy {
   public keyword: string = '';
 
   constructor(
-    private roleService: RoleService,
+    private roleService: RolesService,
     public dialogService: DialogService,
     private notificationService: NotificationService,
     private confirmationService: ConfirmationService
