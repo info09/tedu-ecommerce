@@ -343,11 +343,11 @@ namespace TeduEcommerce.Products
                         from atext in atextTable.DefaultIfEmpty()
                         join avarchar in attributeQueryVarchar on a.Id equals avarchar.AttributeId into avarcharTable
                         from avarchar in avarcharTable.DefaultIfEmpty()
-                        where (adate != null || adate.ProductId == productId)
-                       && (adecimal != null || adecimal.ProductId == productId)
-                        && (aint != null || aint.ProductId == productId)
-                         && (avarchar != null || avarchar.ProductId == productId)
-                          && (atext != null || atext.ProductId == productId)
+                        where (adate == null || adate.ProductId == productId)
+                        && (adecimal == null || adecimal.ProductId == productId)
+                         && (aint == null || aint.ProductId == productId)
+                          && (avarchar == null || avarchar.ProductId == productId)
+                           && (atext == null || atext.ProductId == productId)
                         select new ProductAttributeValueDto()
                         {
                             Label = a.Label,
@@ -355,17 +355,22 @@ namespace TeduEcommerce.Products
                             DataType = a.DataType,
                             Code = a.Code,
                             ProductId = productId,
-                            DateTimeValue = adate.Value,
-                            DecimalValue = adecimal.Value,
-                            IntValue = aint.Value,
-                            TextValue = atext.Value,
-                            VarcharValue = avarchar.Value,
-                            DecimalId = adecimal.Id,
-                            IntId = aint.Id,
-                            TextId = atext.Id,
-                            VarcharId = avarchar.Id,
+                            DateTimeValue = adate != null ? adate.Value : null,
+                            DecimalValue = adecimal != null ? adecimal.Value : null,
+                            IntValue = aint != null ? aint.Value : null,
+                            TextValue = atext != null ? atext.Value : null,
+                            VarcharValue = avarchar != null ? avarchar.Value : null,
+                            DecimalId = adecimal != null ? adecimal.Id : null,
+                            IntId = aint != null ? aint.Id : null,
+                            TextId = atext != null ? atext.Id : null,
+                            VarcharId = avarchar != null ? avarchar.Id : null,
+                            DateTimeId = adate != null ? adate.Id : null,
                         };
-
+            query = query.Where(x => x.DateTimeId != null
+                           || x.DecimalId != null
+                           || x.IntValue != null
+                           || x.TextId != null
+                           || x.VarcharId != null);
             return await AsyncExecuter.ToListAsync(query);
         }
 
@@ -389,11 +394,11 @@ namespace TeduEcommerce.Products
                         from atext in atextTable.DefaultIfEmpty()
                         join avarchar in attributeQueryVarchar on a.Id equals avarchar.AttributeId into avarcharTable
                         from avarchar in avarcharTable.DefaultIfEmpty()
-                        where (adate != null || adate.ProductId == input.ProductId)
-                       && (adecimal != null || adecimal.ProductId == input.ProductId)
-                        && (aint != null || aint.ProductId == input.ProductId)
-                         && (avarchar != null || avarchar.ProductId == input.ProductId)
-                          && (atext != null || atext.ProductId == input.ProductId)
+                        where (adate == null || adate.ProductId == input.ProductId)
+                        && (adecimal == null || adecimal.ProductId == input.ProductId)
+                         && (aint == null || aint.ProductId == input.ProductId)
+                          && (avarchar == null || avarchar.ProductId == input.ProductId)
+                           && (atext == null || atext.ProductId == input.ProductId)
                         select new ProductAttributeValueDto()
                         {
                             Label = a.Label,
@@ -401,16 +406,22 @@ namespace TeduEcommerce.Products
                             DataType = a.DataType,
                             Code = a.Code,
                             ProductId = input.ProductId,
-                            DateTimeValue = adate.Value,
-                            DecimalValue = adecimal.Value,
-                            IntValue = aint.Value,
-                            TextValue = atext.Value,
-                            VarcharValue = avarchar.Value,
-                            DecimalId = adecimal.Id,
-                            IntId = aint.Id,
-                            TextId = atext.Id,
-                            VarcharId = avarchar.Id,
+                            DateTimeValue = adate != null ? adate.Value : null,
+                            DecimalValue = adecimal != null ? adecimal.Value : null,
+                            IntValue = aint != null ? aint.Value : null,
+                            TextValue = atext != null ? atext.Value : null,
+                            VarcharValue = avarchar != null ? avarchar.Value : null,
+                            DateTimeId = adate != null ? adate.Id : null,
+                            DecimalId = adecimal != null ? adecimal.Id : null,
+                            IntId = aint != null ? aint.Id : null,
+                            TextId = atext != null ? atext.Id : null,
+                            VarcharId = avarchar != null ? avarchar.Id : null,
                         };
+            query = query.Where(x => x.DateTimeId != null
+            || x.DecimalId != null
+            || x.IntValue != null
+            || x.TextId != null
+            || x.VarcharId != null);
 
             var totalCount = await AsyncExecuter.LongCountAsync(query);
             var data = await AsyncExecuter.ToListAsync(

@@ -23,8 +23,7 @@ export class AppTopBarComponent implements OnInit {
   constructor(
     public layoutService: LayoutService,
     private authService: AuthService,
-    private router: Router,
-    private tokenService: TokenStorageService
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.userMenuItems = [
@@ -42,7 +41,7 @@ export class AppTopBarComponent implements OnInit {
         label: 'Đăng xuất',
         icon: 'pi pi-sign-out',
         command: event => {
-          this.tokenService.signOut();
+          this.authService.logout();
           this.router.navigate([LOGIN_URL]);
         },
       },

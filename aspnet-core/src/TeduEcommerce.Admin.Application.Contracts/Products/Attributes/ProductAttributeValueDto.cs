@@ -22,8 +22,8 @@ namespace TeduEcommerce.Products.Attributes
         public Guid? DateTimeId { get; set; }
         public Guid? DecimalId { get; set; }
         public Guid? IntId { get; set; }
-        public Guid TextId { get; set; }
-        public Guid VarcharId { get; set; }
+        public Guid? TextId { get; set; }
+        public Guid? VarcharId { get; set; }
 
     }
 }

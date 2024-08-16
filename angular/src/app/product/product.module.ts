@@ -20,9 +20,11 @@ import { BadgeModule } from 'primeng/badge';
 import { ImageModule } from 'primeng/image';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ProductAttributeComponent } from './product-attribute/product-attribute.component';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
-  declarations: [ProductComponent, ProductDetailComponent],
+  declarations: [ProductComponent, ProductDetailComponent, ProductAttributeComponent],
   imports: [
     SharedModule,
     ProductRoutingModule,
@@ -43,7 +45,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     BadgeModule,
     ImageModule,
     ConfirmDialogModule,
+    CalendarModule,
   ],
-  entryComponents: [ProductDetailComponent],
+  entryComponents: [ProductDetailComponent, ProductAttributeComponent],
 })
 export class ProductModule {}

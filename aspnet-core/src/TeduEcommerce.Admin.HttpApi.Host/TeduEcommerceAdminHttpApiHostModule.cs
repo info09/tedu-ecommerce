@@ -105,6 +105,11 @@ public class TeduEcommerceAdminHttpApiHostModule : AbpModule
                 options.Authority = configuration["AuthServer:Authority"];
                 options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
                 options.Audience = "TeduEcommerce.Admin";
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                {
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                };
             });
     }
 
