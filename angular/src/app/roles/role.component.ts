@@ -1,46 +1,39 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  ProductAttributeDto,
-  ProductAttributeInListDto,
-  ProductAttributesService,
-} from '@proxy/tedu-ecommerce/product-attributes';
+import { RoleDto, RoleInListDto, RoleService } from '@proxy/tedu-ecommerce/roles';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, takeUntil } from 'rxjs';
 import { NotificationService } from '../shared/services/notificationService.service';
 import { ConfirmationService } from 'primeng/api';
 import { PagedResultDto } from '@abp/ng.core';
-import { AttributeDetailComponent } from './attribute-detail/attribute-detail.component';
-import { AttributeType } from '@proxy/tedu-ecommerce/attributes';
+import { RoleDetailComponent } from './role-detail/role-detail.component';
 import { MessageConstants } from '../shared/constants/message.const';
 
 @Component({
-  selector: 'app-attribute',
-  templateUrl: './attribute.component.html',
-  styleUrls: ['./attribute.component.scss'],
+  selector: 'app-role',
+  templateUrl: './role.component.html',
+  styleUrls: ['./role.component.scss'],
 })
-export class AttributeComponent implements OnInit, OnDestroy {
+export class RoleComponent implements OnInit, OnDestroy {
+  //System variables
   private ngUnsubscribe = new Subject<void>();
-  blockedPanel: boolean = false;
-  items: ProductAttributeInListDto[] = [];
-  public selectedItems: ProductAttributeInListDto[] = [];
+  public blockedPanel: boolean = false;
 
   //Paging variables
   public skipCount: number = 0;
   public maxResultCount: number = 10;
   public totalCount: number;
 
-  //Filter
-  AttributeCategories: any[] = [];
-  keyword: string = '';
-  categoryId: string = '';
+  //Business variables
+  public items: RoleDto[];
+  public selectedItems: RoleDto[] = [];
+  public keyword: string = '';
 
   constructor(
-    private attributeService: ProductAttributesService,
-    private dialogService: DialogService,
+    private roleService: RoleService,
+    public dialogService: DialogService,
     private notificationService: NotificationService,
     private confirmationService: ConfirmationService
   ) {}
-
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
@@ -49,9 +42,9 @@ export class AttributeComponent implements OnInit, OnDestroy {
     this.loadData();
   }
 
-  loadData() {
+  loadData(selectionId = null) {
     this.toggleBlockUI(true);
-    this.attributeService
+    this.roleService
       .getListFilter({
         keyword: this.keyword,
         skipCount: this.skipCount,
@@ -59,7 +52,7 @@ export class AttributeComponent implements OnInit, OnDestroy {
       })
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
-        next: (res: PagedResultDto<ProductAttributeInListDto>) => {
+        next: (res: PagedResultDto<RoleInListDto>) => {
           this.items = res.items;
           this.totalCount = res.totalCount;
           this.toggleBlockUI(false);
@@ -71,16 +64,16 @@ export class AttributeComponent implements OnInit, OnDestroy {
   }
 
   showAddModal() {
-    const ref = this.dialogService.open(AttributeDetailComponent, {
-      header: 'Thêm mới sản phẩm',
+    const ref = this.dialogService.open(RoleDetailComponent, {
+      header: 'Thêm mới',
       width: '70%',
     });
 
-    ref.onClose.subscribe((data: ProductAttributeDto) => {
+    ref.onClose.subscribe((data: RoleDto) => {
       if (data) {
-        this.loadData();
         this.notificationService.showSuccess(MessageConstants.CREATED_OK_MSG);
         this.selectedItems = [];
+        this.loadData();
       }
     });
   }
@@ -90,58 +83,79 @@ export class AttributeComponent implements OnInit, OnDestroy {
       this.notificationService.showError(MessageConstants.NOT_CHOOSE_ANY_RECORD);
       return;
     }
-
-    const id = this.selectedItems[0].id;
-    const ref = this.dialogService.open(AttributeDetailComponent, {
-      data: { id: id },
-      header: 'Cập nhật',
+    var id = this.selectedItems[0].id;
+    const ref = this.dialogService.open(RoleDetailComponent, {
+      data: {
+        id: id,
+      },
+      header: 'Cập nhật quyền',
       width: '70%',
     });
-    ref.onClose.subscribe((data: ProductAttributeDto) => {
+
+    ref.onClose.subscribe((data: RoleDto) => {
       if (data) {
-        this.loadData();
-        this.selectedItems = [];
         this.notificationService.showSuccess(MessageConstants.UPDATED_OK_MSG);
+        this.selectedItems = [];
+        this.loadData(data.id);
+      }
+    });
+  }
+
+  showPermissionModal() {
+    if (this.selectedItems.length == 0) {
+      this.notificationService.showError(MessageConstants.NOT_CHOOSE_ANY_RECORD);
+      return;
+    }
+    var id = this.selectedItems[0].id;
+    const ref = this.dialogService.open(RoleDetailComponent, {
+      data: {
+        id: id,
+      },
+      header: 'Cập nhật quyền',
+      width: '70%',
+    });
+
+    ref.onClose.subscribe((data: RoleDto) => {
+      if (data) {
+        this.notificationService.showSuccess(MessageConstants.UPDATED_OK_MSG);
+        this.selectedItems = [];
+        this.loadData(data.id);
       }
     });
   }
 
   deleteItems() {
-    if (this.selectedItems.length === 0) {
+    if (this.selectedItems.length == 0) {
       this.notificationService.showError(MessageConstants.NOT_CHOOSE_ANY_RECORD);
       return;
     }
-    const ids = [];
+
+    var ids = [];
     this.selectedItems.forEach(element => {
       ids.push(element.id);
     });
 
     this.confirmationService.confirm({
       message: MessageConstants.CONFIRM_DELETE_MSG,
-      accept: () => this.deleteItemsConfirmed(ids),
+      accept: () => this.deleteItemsConfirm(ids),
     });
   }
 
-  deleteItemsConfirmed(ids: string[]) {
+  deleteItemsConfirm(ids: any[]) {
     this.toggleBlockUI(true);
-    this.attributeService
+    this.roleService
       .deleteMultiple(ids)
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         next: () => {
           this.notificationService.showSuccess(MessageConstants.DELETED_OK_MSG);
           this.loadData();
-          this.selectedItems = [];
           this.toggleBlockUI(false);
         },
         error: () => {
           this.toggleBlockUI(false);
         },
       });
-  }
-
-  getAttributeTypeName(value: number) {
-    return AttributeType[value];
   }
 
   pageChanged(event: any): void {

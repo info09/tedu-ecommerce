@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 
@@ -55,5 +56,26 @@ namespace TeduEcommerce.Roles
             await UnitOfWorkManager.Current.SaveChangesAsync();
             return ObjectMapper.Map<IdentityRole, RoleDto>(data);
         }
+
+        public async override Task<RoleDto> UpdateAsync(Guid id, CreateUpdateRoleDto input)
+        {
+            var role = await Repository.GetAsync(id);
+            if (role == null)
+            {
+                throw new EntityNotFoundException(typeof(IdentityRole), id);
+            }
+            var query = await Repository.GetQueryableAsync();
+            var isNameExisted = query.Any(x => x.Name == input.Name && x.Id != id);
+            if (isNameExisted)
+            {
+                throw new BusinessException(TeduEcommerceDomainErrorCodes.RoleNameAlreadyExists)
+                    .WithData("Name", input.Name);
+            }
+            role.ExtraProperties[RoleConsts.DescriptionFieldName] = input.Description;
+            var data = await Repository.UpdateAsync(role);
+            await UnitOfWorkManager.Current.SaveChangesAsync();
+            return ObjectMapper.Map<IdentityRole, RoleDto>(data);
+        }
     }
 }
+

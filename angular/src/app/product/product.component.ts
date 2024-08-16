@@ -16,6 +16,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ConfirmationService } from 'primeng/api';
 import { ProductAttributeComponent } from './product-attribute/product-attribute.component';
+import { MessageConstants } from '../shared/constants/message.const';
 
 @Component({
   selector: 'app-product',
@@ -105,7 +106,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     ref.onClose.subscribe((data: ProductDto) => {
       if (data) {
         this.loadData();
-        this.notificationService.showSuccess('Thêm sản phẩm thành công');
+        this.notificationService.showSuccess(MessageConstants.CREATED_OK_MSG);
         this.selectedItems = [];
       }
     });
@@ -113,7 +114,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   showEditModal() {
     if (this.selectedItems.length === 0) {
-      this.notificationService.showError('Bạn phải chọn 1 bản ghi');
+      this.notificationService.showError(MessageConstants.NOT_CHOOSE_ANY_RECORD);
       return;
     }
 
@@ -128,7 +129,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       if (data) {
         this.loadData();
         this.selectedItems = [];
-        this.notificationService.showSuccess('Cập nhật sản phẩm thành công');
+        this.notificationService.showSuccess(MessageConstants.UPDATED_OK_MSG);
       }
     });
   }
@@ -144,7 +145,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       if (data) {
         this.loadData();
         this.selectedItems = [];
-        this.notificationService.showSuccess('Thêm thuộc tính sản phẩm thành công');
+        this.notificationService.showSuccess(MessageConstants.CREATED_OK_MSG);
       }
     });
   }
@@ -165,7 +166,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   deleteItems() {
     if (this.selectedItems.length === 0) {
-      this.notificationService.showError('Phải lựa chọn ít nhất 1 bản ghi');
+      this.notificationService.showError(MessageConstants.NOT_CHOOSE_ANY_RECORD);
       return;
     }
 
@@ -174,7 +175,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       ids.push(element.id);
     });
     this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn xóa?',
+      message: MessageConstants.CONFIRM_DELETE_MSG,
       accept: () => this.deleteItemsConfirmed(ids),
     });
   }
@@ -186,7 +187,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         next: () => {
-          this.notificationService.showSuccess('Xóa thành công');
+          this.notificationService.showSuccess(MessageConstants.DELETED_OK_MSG);
           this.loadData();
           this.selectedItems = [];
           this.toggleBlockUI(false);
