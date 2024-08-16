@@ -7,6 +7,11 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
+import { BlockUIModule } from 'primeng/blockui';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { TokenStorageService } from 'src/app/shared/services/token.service';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   imports: [
@@ -18,7 +23,10 @@ import { InputTextModule } from 'primeng/inputtext';
     FormsModule,
     PasswordModule,
     ReactiveFormsModule,
+    BlockUIModule,
+    ProgressSpinnerModule,
   ],
   declarations: [LoginComponent],
+  providers: [AuthService, TokenStorageService, MessageService],
 })
 export class LoginModule {}

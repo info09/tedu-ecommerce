@@ -4,6 +4,7 @@ import { LayoutService } from './service/app.layout.service';
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { LOGIN_URL } from '../shared/constants/urls.const';
+import { TokenStorageService } from '../shared/services/token.service';
 
 @Component({
   selector: 'app-topbar',
@@ -22,7 +23,8 @@ export class AppTopBarComponent implements OnInit {
   constructor(
     public layoutService: LayoutService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private tokenService: TokenStorageService
   ) {}
   ngOnInit(): void {
     this.userMenuItems = [
@@ -40,7 +42,7 @@ export class AppTopBarComponent implements OnInit {
         label: 'Đăng xuất',
         icon: 'pi pi-sign-out',
         command: event => {
-          this.authService.logout();
+          this.tokenService.signOut();
           this.router.navigate([LOGIN_URL]);
         },
       },

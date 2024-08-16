@@ -31,12 +31,30 @@ export class AuthService {
     );
   }
 
+  public refreshToken(refreshToken: string): Observable<LoginResponseDto> {
+    var body = {
+      client_id: environment.oAuthConfig.clientId,
+      client_secret: environment.oAuthConfig.dummyClientSecret,
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+    };
+
+    const data = Object.keys(body)
+      .map((key, index) => `${key}=${encodeURIComponent(body[key])}`)
+      .join('&');
+    return this.http.post<LoginResponseDto>(
+      `${environment.oAuthConfig.issuer}connect/token`,
+      data,
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+    );
+  }
+
   public logout() {
-    localStorage.removeItem(ACCESS_TOKEN);
-    localStorage.removeItem(REFRESH_TOKEN);
+    window.sessionStorage.removeItem(ACCESS_TOKEN);
+    window.sessionStorage.removeItem(REFRESH_TOKEN);
   }
 
   public isAuthenticate(): boolean {
-    return localStorage.getItem(ACCESS_TOKEN) != null;
+    return window.sessionStorage.getItem(ACCESS_TOKEN) != null;
   }
 }

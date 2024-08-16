@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace TeduEcommerce.ProductCategories
 {
+    [Authorize]
     public class ProductCategoriesAppService : CrudAppService<ProductCategory, ProductCategoryDto, Guid, PagedResultRequestDto, CreateUpdateProductCategoryDto, CreateUpdateProductCategoryDto>, IProductCategoriesAppService
     {
         public ProductCategoriesAppService(IRepository<ProductCategory, Guid> repository) : base(repository)
