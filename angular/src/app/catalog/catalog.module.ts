@@ -18,14 +18,23 @@ import { BadgeModule } from 'primeng/badge';
 import { ImageModule } from 'primeng/image';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CalendarModule } from 'primeng/calendar';
-import { RoleRoutingModule } from './role-routing.module';
-import { RoleComponent } from './role.component';
-import { RoleDetailComponent } from './role-detail/role-detail.component';
-import { PermissionGrantComponent } from './permission-grant/permission-grant.component';
+import { CatalogRoutingModule } from './catalog-routing.module';
+import { ProductComponent } from './product/product.component';
+import { ProductDetailComponent } from './product/product-detail/product-detail.component';
+import { ProductAttributeComponent } from './product/product-attribute/product-attribute.component';
+import { AttributeDetailComponent } from './attribute/attribute-detail/attribute-detail.component';
+import { AttributeComponent } from './attribute/attribute.component';
 @NgModule({
-  declarations: [RoleComponent, RoleDetailComponent, PermissionGrantComponent],
+  declarations: [
+    ProductComponent,
+    ProductDetailComponent,
+    ProductAttributeComponent,
+    AttributeComponent,
+    AttributeDetailComponent,
+  ],
   imports: [
     SharedModule,
+    CatalogRoutingModule,
     PanelModule,
     TableModule,
     PaginatorModule,
@@ -44,8 +53,7 @@ import { PermissionGrantComponent } from './permission-grant/permission-grant.co
     ImageModule,
     ConfirmDialogModule,
     CalendarModule,
-    RoleRoutingModule,
   ],
-  entryComponents: [RoleDetailComponent, PermissionGrantComponent],
+  entryComponents: [ProductDetailComponent, ProductAttributeComponent, AttributeDetailComponent],
 })
-export class RoleModule {}
+export class CatalogModule {}

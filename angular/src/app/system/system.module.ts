@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
-import { AttributeRoutingModule } from './attribute-routing.module';
-import { AttributeComponent } from './attribute.component';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
@@ -11,7 +9,6 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
-import { AttributeDetailComponent } from './attribute-detail/attribute-detail.component';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -20,11 +17,24 @@ import { TeduSharedModule } from '../shared/modules/tedu-shared.module';
 import { BadgeModule } from 'primeng/badge';
 import { ImageModule } from 'primeng/image';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { CalendarModule } from 'primeng/calendar';
+import { SystemRoutingModule } from './system-routing.module';
+import { RoleComponent } from './roles/role.component';
+import { RoleDetailComponent } from './roles/role-detail/role-detail.component';
+import { PermissionGrantComponent } from './roles/permission-grant/permission-grant.component';
+import { UserComponent } from './users/user.component';
+import { UserDetailComponent } from './users/user-detail/user-detail.component';
+
 @NgModule({
-  declarations: [AttributeComponent, AttributeDetailComponent],
+  declarations: [
+    RoleComponent,
+    RoleDetailComponent,
+    PermissionGrantComponent,
+    UserComponent,
+    UserDetailComponent,
+  ],
   imports: [
     SharedModule,
-    AttributeRoutingModule,
     PanelModule,
     TableModule,
     PaginatorModule,
@@ -42,7 +52,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     BadgeModule,
     ImageModule,
     ConfirmDialogModule,
+    CalendarModule,
+    SystemRoutingModule,
   ],
-  entryComponents: [AttributeDetailComponent],
+  entryComponents: [RoleDetailComponent, PermissionGrantComponent, UserDetailComponent],
 })
-export class AttributeModule {}
+export class SystemModule {}
