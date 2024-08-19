@@ -7,6 +7,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { MessageConstants } from 'src/app/shared/constants/message.const';
 import { NotificationService } from 'src/app/shared/services/notificationService.service';
 import { UserDetailComponent } from './user-detail/user-detail.component';
+import { RoleAssignComponent } from './role-assign/role-assign.component';
 
 @Component({
   selector: 'app-users',
@@ -140,6 +141,24 @@ export class UserComponent implements OnInit, OnDestroy {
     this.skipCount = (event.page - 1) * this.maxResultCount;
     this.maxResultCount = event.rows;
     this.loadData();
+  }
+  setPassword() {}
+
+  assignRole(id: string) {
+    const ref = this.dialogService.open(RoleAssignComponent, {
+      data: {
+        id: id,
+      },
+      header: 'Gán quyền',
+      width: '70%',
+    });
+
+    ref.onClose.subscribe((result: boolean) => {
+      if (result) {
+        this.notificationService.showSuccess(MessageConstants.ROLE_ASSIGN_SUCCESS_MSG);
+        this.loadData();
+      }
+    });
   }
 
   private toggleBlockUI(enabled: boolean) {

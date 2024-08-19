@@ -32,4 +32,5 @@ export interface UserInListDto extends AuditedEntityDto<string> {
   email?: string;
   userName?: string;
   phoneNumber?: string;
+  isActive: boolean;
 }

@@ -94,27 +94,27 @@
             <p-badge *ngIf="row.isActive == 0" value="Khoá" severity="danger"></p-badge>
           </td>
           <td>
-            <!-- <button
-                pButton
-                pRipple
-                type="button"
-                icon="pi pi-key"
-                pTooltip="Đặt mật khẩu"
-                tooltipPosition="top"
-                class="p-button-rounded p-button-text"
-                (click)="setPassword(row.id)"
-              ></button>
-              
-              <button
-                pButton
-                pRipple
-                type="button"
-                icon="pi pi-users"
-                pTooltip="Gán vai trò"
-                tooltipPosition="top"
-                (click)="assignRole(row.id)"
-                class="p-button-rounded p-button-text"
-              ></button> -->
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-key"
+              pTooltip="Đặt mật khẩu"
+              tooltipPosition="top"
+              class="p-button-rounded p-button-text"
+              (click)="setPassword(row.id)"
+            ></button>
+
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-users"
+              pTooltip="Gán vai trò"
+              tooltipPosition="top"
+              (click)="assignRole(row.id)"
+              class="p-button-rounded p-button-text"
+            ></button>
           </td>
         </tr>
       </ng-template>
