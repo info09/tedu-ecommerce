@@ -158,6 +158,8 @@ namespace TeduEcommerce.System.Users
 
         public async Task SetPasswordAsync(Guid userId, SetPasswordDto input)
         {
+            if (input.NewPassword != input.ConfirmNewPassword)
+                throw new UserFriendlyException("Nhập mật khẩu không đúng");
             var user = await _identityUserManager.FindByIdAsync(userId.ToString()) ?? throw new EntityNotFoundException(typeof(IdentityUser), userId);
             
             var token = await _identityUserManager.GeneratePasswordResetTokenAsync(user);
