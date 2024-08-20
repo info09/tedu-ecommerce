@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using TeduEcommerce.Admin.Permissions;
 using TeduEcommerce.Attributes;
 using TeduEcommerce.Catalog.Products.Attributes;
 using TeduEcommerce.ProductCategories;
@@ -16,7 +17,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace TeduEcommerce.Catalog.Products
 {
-    [Authorize]
+    [Authorize(TeduEcommercePermissions.Product.Default, Policy = "AdminOnly")]
     public class ProductsAppService : CrudAppService<Product, ProductDto, Guid, PagedResultRequestDto, CreateUpdateProductDto, CreateUpdateProductDto>, IProductsAppService
     {
         private readonly ProductManager _productManager;
@@ -51,14 +52,22 @@ namespace TeduEcommerce.Catalog.Products
             _attributeTextRepository = attributeTextRepository;
             _attributeVarcharRepository = attributeVarcharRepository;
             _productAttributeRepository = productAttributeRepository;
+
+            GetPolicyName = TeduEcommercePermissions.Product.Default;
+            GetListPolicyName = TeduEcommercePermissions.Product.Default;
+            CreatePolicyName = TeduEcommercePermissions.Product.Create;
+            UpdatePolicyName = TeduEcommercePermissions.Product.Update;
+            DeletePolicyName = TeduEcommercePermissions.Product.Delete;
         }
 
+        [Authorize(TeduEcommercePermissions.Product.Delete)]
         public async Task DeleteMultipleAsync(IEnumerable<Guid> ids)
         {
             await Repository.DeleteManyAsync(ids);
             await UnitOfWorkManager.Current.SaveChangesAsync();
         }
 
+        [Authorize(TeduEcommercePermissions.Product.Default)]
         public async Task<List<ProductInListDto>> GetListAllAsync()
         {
             var query = await Repository.GetQueryableAsync();
@@ -68,6 +77,7 @@ namespace TeduEcommerce.Catalog.Products
             return ObjectMapper.Map<List<Product>, List<ProductInListDto>>(data);
         }
 
+        [Authorize(TeduEcommercePermissions.Product.Default)]
         public async Task<PagedResultDto<ProductInListDto>> GetListFilterAsync(ProductListFilterDto input)
         {
             var query = await Repository.GetQueryableAsync();
@@ -80,6 +90,7 @@ namespace TeduEcommerce.Catalog.Products
             return new PagedResultDto<ProductInListDto>(totalCount, ObjectMapper.Map<List<Product>, List<ProductInListDto>>(data));
         }
 
+        [Authorize(TeduEcommercePermissions.Product.Create)]
         public override async Task<ProductDto> CreateAsync(CreateUpdateProductDto input)
         {
             var product = await _productManager.CreateAsync(input.ManufacturerId, input.Name, input.Code, input.Slug, input.ProductType, input.SKU, input.SortOrder, input.Visibility, input.IsActive, input.CategoryId, input.SeoMetaDescription, input.Description, input.SellPrice);
@@ -94,6 +105,7 @@ namespace TeduEcommerce.Catalog.Products
             return ObjectMapper.Map<Product, ProductDto>(result);
         }
 
+        [Authorize(TeduEcommercePermissions.Product.Update)]
         public override async Task<ProductDto> UpdateAsync(Guid id, CreateUpdateProductDto input)
         {
             var product = await Repository.GetAsync(id) ?? throw new BusinessException(TeduEcommerceDomainErrorCodes.ProductIsNotExists);
@@ -139,6 +151,7 @@ namespace TeduEcommerce.Catalog.Products
             await _fileContainer.SaveAsync(fileName, bytes, overrideExisting: true);
         }
 
+        [Authorize(TeduEcommercePermissions.Product.Default)]
         public async Task<string> GetThumbnailImageAsync(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
@@ -153,11 +166,13 @@ namespace TeduEcommerce.Catalog.Products
             return result;
         }
 
+        [Authorize(TeduEcommercePermissions.Product.Create)]
         public async Task<string> GetSuggestNewCodeAsync()
         {
             return await _productCodeGenerator.GenerateAsync();
         }
 
+        [Authorize(TeduEcommercePermissions.Product.Create)]
         public async Task<ProductAttributeValueDto> AddProductAttributeAsync(AddUpdateProductAttributeDto input)
         {
             var product = await Repository.GetAsync(input.ProductId) ?? throw new BusinessException(TeduEcommerceDomainErrorCodes.ProductIsNotExists);
@@ -226,6 +241,7 @@ namespace TeduEcommerce.Catalog.Products
             };
         }
 
+        [Authorize(TeduEcommercePermissions.Product.Update)]
         public async Task<ProductAttributeValueDto> UpdateProductAttributeAsync(Guid id, AddUpdateProductAttributeDto input)
         {
             var product = await Repository.GetAsync(input.ProductId) ?? throw new BusinessException(TeduEcommerceDomainErrorCodes.ProductIsNotExists);
@@ -294,6 +310,7 @@ namespace TeduEcommerce.Catalog.Products
             };
         }
 
+        [Authorize(TeduEcommercePermissions.Product.Delete)]
         public async Task RemoveProductAttributeAsync(Guid attributeId, Guid id)
         {
             var attribute = await _productAttributeRepository.GetAsync(x => x.Id == attributeId) ?? throw new BusinessException(TeduEcommerceDomainErrorCodes.ProductAttributeIdIsNotExists);
@@ -324,6 +341,7 @@ namespace TeduEcommerce.Catalog.Products
             await UnitOfWorkManager.Current.SaveChangesAsync();
         }
 
+        [Authorize(TeduEcommercePermissions.Product.Default)]
         public async Task<List<ProductAttributeValueDto>> GetListProductAttributeAllAsync(Guid productId)
         {
             var attributeQuery = await _productAttributeRepository.GetQueryableAsync();
@@ -375,6 +393,7 @@ namespace TeduEcommerce.Catalog.Products
             return await AsyncExecuter.ToListAsync(query);
         }
 
+        [Authorize(TeduEcommercePermissions.Product.Default)]
         public async Task<PagedResultDto<ProductAttributeValueDto>> GetListProductAttributesAsync(ProductAttributeListFilterDto input)
         {
             var attributeQuery = await _productAttributeRepository.GetQueryableAsync();

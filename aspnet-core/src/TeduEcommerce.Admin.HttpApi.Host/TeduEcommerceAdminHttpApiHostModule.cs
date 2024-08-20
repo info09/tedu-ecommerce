@@ -121,6 +121,10 @@ public class TeduEcommerceAdminHttpApiHostModule : AbpModule
                     ValidateIssuer = false,
                 };
             });
+        context.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("AdminOnly", po => po.RequireRole("Admin"));
+        });
     }
 
     private static void ConfigureSwaggerServices(ServiceConfigurationContext context, IConfiguration configuration)

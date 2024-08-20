@@ -1,4 +1,5 @@
-﻿using TeduEcommerce.Localization;
+﻿using TeduEcommerce.Admin.Permissions;
+using TeduEcommerce.Localization;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Localization;
 
@@ -10,6 +11,18 @@ public class TeduEcommercePermissionDefinitionProvider : PermissionDefinitionPro
     {
         //Catalog
         var catalogGroup = context.AddGroup(TeduEcommercePermissions.CatalogGroupName, L("Permission:Catalog"));
+
+        //Manufacture
+        var manufacturerPermission = catalogGroup.AddPermission(TeduEcommercePermissions.Manufacturer.Default, L("Permission:Catalog.Manufacturer"));
+        manufacturerPermission.AddChild(TeduEcommercePermissions.Manufacturer.Create, L("Permission:Catalog.Manufacturer.Create"));
+        manufacturerPermission.AddChild(TeduEcommercePermissions.Manufacturer.Update, L("Permission:Catalog.Manufacturer.Update"));
+        manufacturerPermission.AddChild(TeduEcommercePermissions.Manufacturer.Delete, L("Permission:Catalog.Manufacturer.Delete"));
+
+        //Product Category
+        var productCategoryPermission = catalogGroup.AddPermission(TeduEcommercePermissions.ProductCategory.Default, L("Permission:Catalog.ProductCategory"));
+        productCategoryPermission.AddChild(TeduEcommercePermissions.ProductCategory.Create, L("Permission:Catalog.ProductCategory.Create"));
+        productCategoryPermission.AddChild(TeduEcommercePermissions.ProductCategory.Update, L("Permission:Catalog.ProductCategory.Update"));
+        productCategoryPermission.AddChild(TeduEcommercePermissions.ProductCategory.Delete, L("Permission:Catalog.ProductCategory.Delete"));
 
         //Add product
         var productPermission = catalogGroup.AddPermission(TeduEcommercePermissions.Product.Default, L("Permission:Catalog.Product"));
